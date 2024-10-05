@@ -1,15 +1,15 @@
 # site name
-prefixName: Dynamic_Pigeon 的博客
-siteName: 喵
+prefixName: Dynamic_Pigeon の
+siteName: 秘密小屋
 # favicon and site master avatar
 favicon: /images/favicon.ico
-avatar: /img/custom/avatar.jpg
+avatar: https://cdn.luogu.com.cn/upload/usericon/545317.png
 url: https://chy669086.github.io
 description: Live your life with passion! With some drive!
 cdn: 
 pjax: 1
 # 1开启
-mathjax: 0
+mathjax: 1
 
 notice: hexo-Sakura主题已经开源，目前正在开发中...
 lazyloadImg: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg
@@ -18,6 +18,7 @@ menus:
   首页: { path: /, fa: fa-fort-awesome faa-shake }
   归档: { path: /archives, fa: fa-archive faa-shake, submenus: { 
     技术: {path: /categories/技术/, fa: fa-code }, 
+    题解: {path: /categories/题解/, fa: fa-file-text-o }, 
     # 生活: {path: /categories/生活/, fa: fa-file-text-o }, 
     # 资源: {path: /categories/资源/, fa: fa-cloud-download }, 
     # 随想: {path: /categories/随想/, fa: fa-commenting-o },
@@ -47,14 +48,14 @@ homePageSortType: -1
 homeArticleShown: 10
 # 背景图片 更好的修改
 bg:
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(1).jpg.webp
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(2).jpg.webp
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(3).jpg.webp
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(4).jpg.webp
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(5).jpg.webp
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(6).jpg.webp
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(7).jpg.webp
-  - https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/cover/(8).jpg.webp
+  - https://s3.bmp.ovh/imgs/2024/10/01/7d1f2d8f10653936.png
+  - https://s3.bmp.ovh/imgs/2024/10/01/d254935c80511b82.png
+  - https://s3.bmp.ovh/imgs/2024/10/01/fff584855710b2ee.png
+  - https://s3.bmp.ovh/imgs/2024/10/01/8e3255ed13b6619b.png
+  - https://s3.bmp.ovh/imgs/2024/10/01/ed194d2571726fcb.png
+  - https://s3.bmp.ovh/imgs/2024/10/01/89a65a3569f8a057.png
+  - http://cdnjson.com/images/2024/10/01/81197b85969320adbdf325c260404543.png
+  - http://cdnjson.com/images/2024/10/01/bb00ebdf0be26ef8765361f1184fa2a0.jpg
 
 # 背景图片样式 空 原图效果 filter-dim 阴影 filter-grid 横条 filter-dot 点点
 bgclass: filter-dot
@@ -68,7 +69,7 @@ startdash:
 
 
 # your site build time or founded date
-siteBuildingTime: 07/17/2024
+siteBuildingTime: 10/01/2024
 
 #social  url, img PC端配置
 social:
@@ -84,9 +85,9 @@ msocial:
 
 donate:
   paypal: 
-  alipay: /img/custom/donate/AliPayQR.jpg
-  wechat: /img/custom/donate/WeChanQR.jpg
-  wechatSQ: /img/custom/donate/WeChanSQ.jpg
+  alipay: /images/donate/AliPayQR.png
+  wechat: /images/donate/WeChanQR.png
+  wechatSQ: /images/donate/WeChanQR.png
 
 # 视频地址为https://cdn.jsdelivr.net/gh/honjun/hojun@1.2/Unbroken.mp4，配置如下
 movies:
@@ -108,14 +109,14 @@ aplayer:
 
 # Valine
 valine: true
-v_appId: w2qQP4Qsgupm8x4tXPurLrF8-gzGzoHsz
-v_appKey: fIfC7UnrStJPeJqqCCwZj0kN
+v_appId: UBcI72jTU9rI7JRLoMf8dDYW-MdYXbMMI
+v_appKey: gTKs1SNQSmReQkqrp7NTzcTK
 
 # Waline
 waline:
-  enable: false
-  serverURL: #服务端地址
-  visitor: false #统计阅读量
+  enable: true
+  serverURL: https://waline-5e8bt69qc-chy669086s-projects.vercel.app/ #服务端地址
+  visitor: true #统计阅读量
   comment_count: true #统计评论数
   avatar: mp # Gravatar style : mp/identicon/monsterid/wavatar/retro/hide
   guest_info: nick #,mail,link # custom comment header
