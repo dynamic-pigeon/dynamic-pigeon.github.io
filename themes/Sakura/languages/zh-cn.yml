@@ -49,11 +49,14 @@ insight:
     zh: 生活
     en: live
     img: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/banner/writing.jpg
-题解:
-    zh: 题解
-    en: Solution
+笔记:
+    zh: 笔记
+    en: Note – Record Life
     img: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/banner/coding.jpg
-
+文章:
+    zh: 文章
+    en: Article
+    img: https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/banner/writing.jpg
 
 #tag
 悦读:

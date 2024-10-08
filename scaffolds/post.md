@@ -2,7 +2,7 @@
 title: {{ title }}
 date: {{ date }}
 author: Dynamic_Pigeon
-avatar: https://cdn.luogu.com.cn/upload/usericon/545317.png
+avatar: https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg
 authorLink: chy669086.github.io
 authorAbout: 一个好奇的人
 authorDesc: 一个好奇的人

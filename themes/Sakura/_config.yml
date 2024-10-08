@@ -3,7 +3,7 @@ prefixName: Dynamic_Pigeon の
 siteName: 秘密小屋
 # favicon and site master avatar
 favicon: /images/favicon.ico
-avatar: https://cdn.luogu.com.cn/upload/usericon/545317.png
+avatar: https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg
 url: https://chy669086.github.io
 description: Live your life with passion! With some drive!
 cdn: 
@@ -18,11 +18,11 @@ menus:
   首页: { path: /, fa: fa-fort-awesome faa-shake }
   归档: { path: /archives, fa: fa-archive faa-shake, submenus: { 
     技术: {path: /categories/技术/, fa: fa-code }, 
-    题解: {path: /categories/题解/, fa: fa-file-text-o }, 
+    文章: {path: /categories/文章/, fa: fa-file-text-o }, 
     # 生活: {path: /categories/生活/, fa: fa-file-text-o }, 
     # 资源: {path: /categories/资源/, fa: fa-cloud-download }, 
-    # 随想: {path: /categories/随想/, fa: fa-commenting-o },
-    转载: {path: /categories/转载/, fa: fa-book }
+    随想: {path: /categories/随想/, fa: fa-commenting-o },
+    笔记: {path: /categories/笔记/, fa: fa-book }
   } }
   清单: { path: javascript:;, fa: fa-list-ul faa-vertical, submenus: { 
     书单: {path: /tags/悦读/, fa: fa-th-list faa-bounce }, 
@@ -114,13 +114,13 @@ v_appKey: gTKs1SNQSmReQkqrp7NTzcTK
 
 # Waline
 waline:
-  enable: true
+  enable: false
   serverURL: https://waline-5e8bt69qc-chy669086s-projects.vercel.app/ #服务端地址
   visitor: true #统计阅读量
   comment_count: true #统计评论数
-  avatar: mp # Gravatar style : mp/identicon/monsterid/wavatar/retro/hide
+  avatar: https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg # Gravatar style : mp/identicon/monsterid/wavatar/retro/hide
   guest_info: nick #,mail,link # custom comment header
   pageSize: 10
-  placeholder: 祝开开心心！ # Comment Box placeholder
+  placeholder: 祝你开开心心！ # Comment Box placeholder
   requiredFields: [ 'nick','mail' ] #设置必填项
   background: https://gitee.com/cungudafa/source/raw/master/img/gif/Sitich/Sitich2.gif #输入框提示动画

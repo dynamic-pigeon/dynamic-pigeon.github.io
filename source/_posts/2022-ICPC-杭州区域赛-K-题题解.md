@@ -1,24 +1,27 @@
 ---
 title: 2022 ICPC 杭州区域赛 K 题题解
 author: Dynamic_Pigeon
-avatar: https://cdn.luogu.com.cn/upload/usericon/545317.png
+avatar: https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg
 authorLink: chy669086.github.io
 authorAbout: 一个好奇的人
 authorDesc: 一个好奇的人
-categories: 题解
+categories: 笔记
 comments: true
 date: 2024-10-02 17:01:08
 tags: 
-  - c++
+  - C++
   - ICPC
+  - 题解
 keywords:
 description:
 photos: http://cdnjson.com/images/2024/10/01/81197b85969320adbdf325c260404543.png
 ---
 ## 题目大意
+
 给你 $n$ 个字符串，然后有 $q$ 次询问，每次询问给出一个字典序，请你输出在这个字典序下的逆序对个数。
 
 ## 题解
+
 首先考虑暴力，每次询问可以 $O(|S|\log(n))$ 处理，显然会超时。
 
 考虑优化，注意到两个字符串比较出结果一定是在某个位置发生的（称这个比出大小的比较为**决定性比较**），这两个字符串一定有一个相同的前缀（长度可能是 0）。那么可以把问题转换成判断某个字符和其他字符发生了几次**决定性**的的比较，那么对于每次询问我们和 $O(26 \times 26)$ 处理。
@@ -26,6 +29,7 @@ photos: http://cdnjson.com/images/2024/10/01/81197b85969320adbdf325c260404543.pn
 如何找到发生了几次决定性的比较呢，注意前面的一个性质，决定性比较之前的两个字符串一定是同前缀，这正好撞上了字典树的性质：相同前缀共用一条链。
 
 我们只要统计每个节点的后继节点字符总数，就可以对每一个新插入的字符串进行决定性比较的统计。对于 `a` 和 `aa` 这种串，我们可以简单在每个串后面加一个字符，并人为将这个字符的字典序设置为最小
+
 ```c++
 // 字段树节点
 struct node {

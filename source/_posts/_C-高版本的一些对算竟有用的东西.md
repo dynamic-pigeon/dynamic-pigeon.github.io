@@ -1,7 +1,7 @@
 ---
 title: C++ 高版本的一些对算竟有用的东西.
 author: Dynamic_Pigeon
-avatar: https://cdn.luogu.com.cn/upload/usericon/545317.png
+avatar: https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg
 authorLink: chy669086.github.io
 authorAbout: 一个好奇的人
 authorDesc: 一个好奇的人
@@ -9,7 +9,7 @@ categories: 技术
 comments: true
 date: 2024-10-01 16:57:58
 tags:
-    - c++
+    - C++
 keywords:
 description:
 photos: https://s3.bmp.ovh/imgs/2024/10/01/89a65a3569f8a057.png
