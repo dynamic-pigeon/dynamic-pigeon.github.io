@@ -14,9 +14,11 @@
     <%= post.title %></a>
     </h1>
     <div class="p-time">
+      <i class="iconfont icon-calendar">
+      </i>发表于<%= date(post.date, 'YYYY-MM-DD HH:MM') %>
+      <br>
       <i class="iconfont icon-time">
-      </i>
-    <%= date(post.date, 'YYYY-M-D') %></div>
+      </i>更新于<%= date(post.updated, 'YYYY-MM-DD HH:MM') %></div>
     <p>
     <%= post.description %></p>
     <footer class="entry-footer">

@@ -20,19 +20,19 @@
                 全部展开/收缩</span>
               ]</p>
               <% var lastYear; var lastMonth; %>
-              <% site.posts.sort('date', theme.homePageSortType).each(function(post, i){ %>
-              <% var currentYear = parseInt(date(post.date, 'YYYY')); %>
-              <% var currentMonth = parseInt(date(post.date, 'YYYYMM')); %>
+              <% site.posts.sort('updated', theme.homePageSortType).each(function(post, i){ %>
+              <% var currentYear = parseInt(date(post.updated, 'YYYY')); %>
+              <% var currentMonth = parseInt(date(post.updated, 'YYYYMM')); %>
               <% if (lastYear != currentYear){ %>
                 <% lastYear = currentYear; %>
-                <h3 class="al_year"><%= date(post.date, 'YYYY') %>年</h3>
+                <h3 class="al_year"><%= date(post.updated, 'YYYY') %>年</h3>
               <% } %>
               <% if (lastMonth != currentMonth){ %>
                 <% lastMonth = currentMonth; %>
                 <ul class="al_mon_list">
                   <li class="al_li">
                     <span class="al_mon" style="cursor: s-resize;">
-                      <%= date(post.date, 'MM') %>月(<span id="post-num">
+                      <%= date(post.updated, 'MM') %>月(<span id="post-num">
                       3</span>
                     篇文章)</span>
                     <ul class="al_post_list" style="">
@@ -40,11 +40,11 @@
                       <li>
                         <a href="<%- url_for(post.path) %>">
                           <span style="color:#0bf;">
-                          <%= date(post.date, 'DD') %>日<%= time(post.date) %></span>
+                          <%= date(post.updated, 'DD') %>日<%= time(post.updated) %></span>
                           <%= post.title %>
                         </a>
                       </li>
-                      <% if (!site.posts.sort('date', theme.homePageSortType).eq(i + 1) || currentMonth != parseInt(date(site.posts.sort('date', theme.homePageSortType).eq(i + 1).date, 'YYYYMM'))){ %>
+                      <% if (!site.posts.sort(config.index_generator.order_by, theme.homePageSortType).eq(i + 1) || currentMonth != parseInt(date(site.posts.sort(config.index_generator.order_by, theme.homePageSortType).eq(i + 1).updated, 'YYYYMM'))){ %>
                     </ul>
                   </li>
                 </ul>
