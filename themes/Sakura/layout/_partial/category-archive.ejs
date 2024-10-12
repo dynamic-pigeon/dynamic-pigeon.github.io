@@ -1,6 +1,6 @@
 <% if (pagination == 2){ %>
   <!-- 首页默认取最最新文章集 -->
-  <% page.posts.sort(config.index_generator.order_by, theme.homePageSortType).limit(theme.homeArticleShown).each(function(post, index){ %>
+  <% page.posts.sort('updated', theme.homePageSortType).limit(theme.homeArticleShown).each(function(post, index){ %>
     <%- partial('_widget/category-items', {index: index, post: post}) %>
   <% }) %>
 <% } else { %>
