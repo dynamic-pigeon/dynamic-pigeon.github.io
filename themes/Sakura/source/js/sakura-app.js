@@ -1106,7 +1106,7 @@ var home = location.href,
           appKey: mashiro_option.v_appKey,
           path: window.location.pathname,
           placeholder: '你是我一生只会遇见一次的惊喜 ...',
-          visitor: true
+          serverURLs: "https://ubci72jt.api.lncldglobal.com"
         })
       }
     },
