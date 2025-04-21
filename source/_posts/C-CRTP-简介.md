@@ -1,5 +1,5 @@
 ---
-title: C++ CRTR 简介
+title: C++ CRTP 简介
 author: Dynamic_Pigeon
 avatar: https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg
 authorLink: chy669086.github.io
@@ -8,14 +8,14 @@ authorDesc: 一个好奇的人
 categories: 技术
 comments: true
 date: 2024-10-05 22:08:24
-updated: 2024-10-05 22:08:24
+updated: 2024-11-27 12:11:35
 tags:
     - C++
 keywords: CETR 继承
 description:
 photos: http://cdnjson.com/images/2024/10/05/image.png
 ---
-最近看群友讨论到了“虚函数就是历史遗留问题，现在完全可以用 CRTR 代替”，好奇，就去搜索了什么是 CRTR，结果发现这么早的一个技术我现在才知道，真是落后时代 10 余年。
+最近看群友讨论到了“虚函数就是历史遗留问题，现在完全可以用 CRTP 代替”，好奇，就去搜索了什么是 CRTP，结果发现这么早的一个技术我现在才知道，真是落后时代 10 余年。
 
 ## 虚函数与动态链接
 
@@ -45,7 +45,7 @@ int main() {
 
 调用 `p->jump()` 的时候，程序会去虚函数表寻找那个指针，在这个程序中最终会调用 `Cat::jump()`。
 
-但是查表终究是有代价的，有没有兼顾多态和效率的做法呢，于是，CRTR(Curiously Recurring Template Pattern) 应运而生。
+但是查表终究是有代价的，有没有兼顾多态和效率的做法呢，于是，CRTP(Curiously Recurring Template Pattern) 应运而生。
 
 ## 通过模板实现静态绑定
 
@@ -99,21 +99,21 @@ public:
 };
 
 template <typename T>
-class Animal_CRTR : public Animal {
+class Animal_CRTP : public Animal {
 public:
   void say() const override {
     static_cast<const T*>(this)->say();
   }
 };
 
-class Cat : public Animal_CRTR<Cat> {
+class Cat : public Animal_CRTP<Cat> {
 public:
   void say() const {
     std::cout << "I'm a cat.\n";
   }
 };
 
-class Dog : public Animal_CRTR<Dog> {
+class Dog : public Animal_CRTP<Dog> {
 public:
   void say() const {
     std::cout << "I'm a dog.\n";
@@ -141,3 +141,28 @@ I'm a cat.
 不过写起来确实很麻烦，而且没有 override 带来的部分编译提示（字打错了跑哪里哭去），但是这样写我们同时赢得了多态和效率（同时代码量极致膨胀）。
 
 ~~为什么有人还在用继承啊~~
+
+## 2024-11-27 ADD
+
+C++23 带来了一个神奇的 `this auto &&self` 语法， CRTP 于是有了一个神奇的写法
+
+
+```c++
+#include <cstdio>
+
+struct Base { void name(this auto &&self) { self.impl(); } };
+struct D1 : public Base { void impl() { std::puts("D1::impl()"); } };
+struct D2 : public Base { void impl() { std::puts("D2::impl()"); } };
+ 
+int main()
+{
+    D1 d1; d1.name();
+    D2 d2; d2.name();
+}
+```
+
+C++ 标准有点过于色琴了
+
+## 参考文献
+
+[1] https://en.cppreference.com/w/cpp/language/crtp

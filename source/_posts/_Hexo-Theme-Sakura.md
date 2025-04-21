@@ -153,7 +153,7 @@ menus:
     Lab: {path: /lab/, fa: fa-cogs },
   } }
   客户端: { path: /client/, fa: fa-android faa-vertical }
-  RSS: { path: /atom.xml, fa: fa-rss faa-pulse }
+  RSS: { path: /rss2.xml, fa: fa-rss faa-pulse }
 
 # Home page sort type: -1: newer first，1: older first. 【非】
 homePageSortType: -1

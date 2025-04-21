@@ -106,14 +106,15 @@ collapse:
 
 #RSS
 feed:
-  type: atom
-  path: atom.xml
+  type: rss2
+  path: 
   limit: 20
   hub:
-  content:
+  content: true
   content_limit: 140
-  content_limit_delim: ' '
-  order_by: -date
+  content_limit_delim: '\n'
+  order_by: -updated
+  icon: icon.png
 
 
 # 需要被更改的插件
