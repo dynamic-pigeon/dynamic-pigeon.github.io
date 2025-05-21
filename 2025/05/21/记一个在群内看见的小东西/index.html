@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">.bashrc 向 .zshrc 迁移的小妙招 | Dynamic_Pigeon</title>
+  <title itemprop="name">记一个在群内看见的小东西 | Dynamic_Pigeon</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -321,11 +321,11 @@
 
   <div class="pattern-center single-center">
     <!-- 有配图默认渲染第一张 -->
-    <div class="pattern-attachment-img lazyload" style="background-image: url(https://s3.bmp.ovh/imgs/2024/10/11/5610094626aebd1d.png);" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://s3.bmp.ovh/imgs/2024/10/11/5610094626aebd1d.png">
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://s3.bmp.ovh/imgs/2025/05/21/fde69d64df05b95c.png);" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://s3.bmp.ovh/imgs/2025/05/21/fde69d64df05b95c.png">
     </div>
     <header class="pattern-header single-header">
       <h1 class="entry-title">
-      .bashrc 向 .zshrc 迁移的小妙招</h1>
+      记一个在群内看见的小东西</h1>
       <p class="entry-census">
         <span>
           <a href="dynamic-pigeon.github.io">
@@ -338,12 +338,12 @@
         <span class="bull">
         ·</span>
         发布时间
-        2024-10-11
+        2025-5-21
 
         <span class="bull">
         ·</span>
         更新时间
-        2024-10-11<span class="bull">
+        2025-5-21<span class="bull">
         ·</span>
       <span id="busuanzi_value_page_pv"></span>次阅读</p>
     </header>
@@ -357,37 +357,92 @@
         <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
         
         <div class="entry-content">
-          <p>昨天兴致突发安装了 zsh 并使用了 powerlevel10k 主题。有一说一 zsh 使用体验比 bash 好太多了，但是今天我发现了一个重大的问题：之前的所有配置都在 .bashrc，这些不会自动继承到 .zshrc，这可咋办？而且 zsh 和 bash 命令并不兼容，不能简单在 .zshrc 加一句 <code>source $HOME/.bashrc</code> 来解决。</p>
-<p>直接 <code>source $HOME/.bashrc</code> 会出现以下报错</p>
-<pre><code class="shell">/usr/share/bash-completion/bash_completion:45: command not found: shopt
-/usr/share/bash-completion/bash_completion:1596: parse error near `|&#39;
+          <p>在 rust 交流群看见一个人希望写一个类似 cpp mutextable 的东西，然后我叫他用 <code>Mutex&lt;()&gt;</code> 代替 <code>std::mutex</code> 写一下试试。</p>
+<p>然后他反手写出类似下面的代码：</p>
+<pre><code class="rust">struct MutexTable &#123;
+    table: DashMap&lt;String, Mutex&lt;()&gt;&gt;,
+&#125;
+
+impl MutexTable &#123;
+    async fn lock(&amp;self, key: &amp;str) -&gt; Result&lt;MutexGuard&lt;&#39;_, ()&gt; &gt;&#123;
+        let lock = self.table
+            .entry(key.to_string())
+            .or_insert_with(|| Mutex::new(()));
+        let guard = lock.lock().await;
+        Ok(guard)
+    &#125;
+&#125;
 </code></pre>
-<p>一种方法是把所有配置文件都重新迁移到 .zshrc，<del>但是我懒</del>，所以我找到了些小妙招。</p>
-<p>发现在 bash 直接运行 zsh 会让 zsh 继承 bash 的所有环境变量，所以只要想办法让 zsh 启动的时候启动 bash 再用 bash 启动 zsh 就好了。</p>
-<h2 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h2><h3 id="手动解决"><a href="#手动解决" class="headerlink" title="手动解决"></a>手动解决</h3><p>一种方法是手动解决</p>
-<pre><code class="shell"># 在 zsh 中执行
-exec bash
-# 在 bash 中执行
-exec zsh
+<p>然后报错，报错信息是：</p>
+<pre><code class="bash">error[E0515]: cannot return value referencing local variable `lock`
+  --&gt; src/main.rs:22:9
+   |
+21 |         let guard = lock.lock().await;
+   |                     ---- `lock` is borrowed here
+22 |         Ok(guard)
+   |         ^^^^^^^^^ returns a value referencing data owned by the current function
 </code></pre>
-<h3 id="改写配置文件"><a href="#改写配置文件" class="headerlink" title="改写配置文件"></a>改写配置文件</h3><p>另一种方法是改写 .zshrc 和 .bashrc。</p>
-<p>首先，我们在 .zshrc <strong>头部</strong>加入</p>
-<pre><code class="shell">if [[ -v __USE_ZSH ]]; then
-  unset __USE_ZSH
-else
-  echo &quot;ENTER BASH!&quot;
-  export __USE_ZSH=1
-  exec bash
-fi
+<p>当时我挺纳闷的，于是我用 <code>HashMap</code> 写了一个：</p>
+<pre><code class="rust">struct MutexTable &#123;
+    table: HashMap&lt;String, Mutex&lt;()&gt;&gt;,
+&#125;
+
+impl MutexTable &#123;
+    async fn lock(&amp;mut self, key: &amp;str) -&gt; Result&lt;MutexGuard&lt;&#39;_, ()&gt; &gt;&#123;
+        let mutex = self.table.entry(key.to_string()).or_insert_with(|| Mutex::new(()));
+        Ok(mutex.lock().await)
+    &#125;
+&#125;
 </code></pre>
-<p>然后在 .bashrc <strong>底部</strong>加入</p>
-<pre><code class="shell">if [[ $__USE_ZSH -eq 1 ]]; then
-    echo &quot;ENTER ZSH!&quot;
-    exec zsh
-fi
+<p>出乎意料的，这个编译通过了（？</p>
+<hr>
+<p>但是我不理解啊，于是我看了一下返回值类型，<code>HashMap</code> 返回了一个 <code>&amp;mut Mutex&lt;()&gt;</code> 而 <code>DashMap</code> 返回了一个 <code>RefMut&lt;&#39;_, String, Mutex&lt;()&gt;&gt;</code>。</p>
+<p>看不出任何东西。</p>
+<p>进行生命周期手动标注</p>
+<pre><code class="rust">struct MutexTable &#123;
+    table: HashMap&lt;String, Mutex&lt;()&gt;&gt;,
+&#125;
+
+impl MutexTable &#123;
+    async fn lock&lt;&#39;a&gt;(&amp;&#39;a mut self, key: &amp;str) -&gt; Result&lt;MutexGuard&lt;&#39;a, ()&gt; &gt;&#123;
+        let mutex: &amp;&#39;a mut Mutex&lt;()&gt; = self.table.entry(key.to_string()).or_insert_with(|| Mutex::new(()));
+        Ok(mutex.lock().await)
+    &#125;
+&#125;
 </code></pre>
-<p>这两个命令大概就是：进入 zsh 先判断有没有 <code>__USE_ZSH</code> 这变量，有，就 unset 掉，否则创建 <code>__USE_ZSH=1</code> 然后进入 bash，bash 中如果发现 <code>__USE_ZSH==1</code>，就会进入 zsh，就很妙的把 bash 的环境变量偷过来了。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_49030008/article/details/137921205">https://blog.csdn.net/qq_49030008/article/details/137921205</a></p>
+<p>通过编译</p>
+<pre><code class="rust">struct MutexTable &#123;
+    table: DashMap&lt;String, Mutex&lt;()&gt;&gt;,
+&#125;
+
+impl MutexTable &#123;
+    async fn lock&lt;&#39;a&gt;(&amp;&#39;a self, key: &amp;str) -&gt; Result&lt;MutexGuard&lt;&#39;a, ()&gt; &gt;&#123;
+        let lock: dashmap::mapref::one::RefMut&lt;&#39;a, String, Mutex&lt;()&gt;&gt; = self.table
+            .entry(key.to_string())
+            .or_insert_with(|| Mutex::new(()));
+        let guard: MutexGuard&lt;&#39;a, ()&gt; = lock.lock().await;
+        Ok(guard)
+    &#125;
+&#125;
+</code></pre>
+<p>报错信息：</p>
+<pre><code class="bash">error[E0597]: `lock` does not live long enough
+  --&gt; src/main.rs:21:41
+   |
+17 |     async fn lock&lt;&#39;a&gt;(&amp;&#39;a self, key: &amp;str) -&gt; Result&lt;MutexGuard&lt;&#39;a, ()&gt; &gt;&#123;
+   |                   -- lifetime `&#39;a` defined here
+18 |         let lock: dashmap::mapref::one::RefMut&lt;&#39;a, String, Mutex&lt;()&gt;&gt; = self.table
+   |             ---- binding `lock` declared here
+...
+21 |         let guard: MutexGuard&lt;&#39;a, ()&gt; = lock.lock().await;
+   |                    ------------------   ^^^^ borrowed value does not live long enough
+   |                    |
+   |                    type annotation requires that `lock` is borrowed for `&#39;a`
+22 |         Ok(guard)
+23 |     &#125;
+   |     - `lock` dropped here while still borrowed
+</code></pre>
+<p>这下可以确定了，这就是因为 <code>RefMut</code> 包了一层的缘故，因为 <code>RefMut</code> 不等同与引用，所以生命周期推导规则不同，导致了不能返回</p>
 
         </div>
         <!-- .entry-content -->
@@ -416,36 +471,19 @@ fi
       <div class="toc" style="background: none;"></div>
       <section class="post-squares nextprev">
         
-          
-            <div class="post-nepre half previous">
-          
-            <a href="/2024/11/20/C-ADL-%E7%AE%80%E4%BB%8B/" rel="prev">
-              <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://s3.bmp.ovh/imgs/2024/11/20/adcf194d90bbd779.png" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://s3.bmp.ovh/imgs/2024/11/20/adcf194d90bbd779.png">
-              </div>
-              <span class="label">
-              Previous Post</span>
-              <div class="info">
-                <h3>
-                C++ ADL 简介</h3>
-                <hr>
-              </div>
-            </a>
-          </div>
-        
         
           
-            <div class="post-nepre half next">
+            <div class="post-nepre full next">
           
-            <a href="/2024/10/08/2024-%E7%A7%8B%E5%86%AC%E5%AD%A3%E5%BC%80%E6%BA%90%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%AE%AD%E7%BB%83%E8%90%A5%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="next">
+            <a href="/2025/01/27/%E4%BB%8E%E6%BA%90%E7%A0%81%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85gcc/" rel="next">
               <div class="background">
-                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://s3.bmp.ovh/imgs/2024/10/08/14b0416bb5096fb3.jpeg" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://s3.bmp.ovh/imgs/2024/10/08/14b0416bb5096fb3.jpeg">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://s3.bmp.ovh/imgs/2025/01/27/6ee574e3a969b70c.png" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://s3.bmp.ovh/imgs/2025/01/27/6ee574e3a969b70c.png">
               </div>
               <span class="label">
               Next Post</span>
               <div class="info">
                 <h3>
-                2024 秋冬季开源操作系统训练营学习笔记</h3>
+                从源码编译安装gcc</h3>
                 <hr>
               </div>
             </a>
