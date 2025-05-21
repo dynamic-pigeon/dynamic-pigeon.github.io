@@ -13,7 +13,7 @@ timezone:
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://chy669086.github.io
+url: https://dynamic-pigeon.github.io
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
@@ -88,16 +88,16 @@ deploy:
   type: git
   repo: 
     # github: git@github.com:honjun/honjun.github.io.git
-    github: git@github.com:chy669086/chy669086.github.io.git
-    # coding: https://github.com/chy669086/chy669086.github.io
+    github: git@github.com:dynamic-pigeon/dynamic-pigeon.github.io.git
+    # coding: https://github.com/chy669086/dynamic-pigeon.github.io
   branch: main
 # backup
 backup:
   type: git
-  message: backup my blog of git@github.com:chy669086/chy669086.github.io.git
+  message: backup my blog of git@github.com:dynamic-pigeon/dynamic-pigeon.github.io.git
   repository:
-    github: git@github.com:chy669086/chy669086.github.io.git,backup
-    # coding: https://github.com/chy669086/chy669086.github.io,backup
+    github: git@github.com:dynamic-pigeon/dynamic-pigeon.github.io.git,backup
+    # coding: https://github.com/chy669086/dynamic-pigeon.github.io,backup
 
 collapse:
   border: true  # Whether to enable borders for content hidden using 'collapsebtn' and 'collapselink' / 是否开启按钮和链接样式的边框

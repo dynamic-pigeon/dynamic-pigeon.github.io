@@ -2,7 +2,7 @@
 title: 2022 ICPC 杭州区域赛 K 题题解
 author: Dynamic_Pigeon
 avatar: https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg
-authorLink: chy669086.github.io
+authorLink: dynamic-pigeon.github.io
 authorAbout: 一个好奇的人
 authorDesc: 一个好奇的人
 categories: 笔记
