@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  
+  <title itemprop="name">2024 秋冬季开源操作系统训练营学习笔记 | Dynamic_Pigeon</title>
+  
+    <link rel="shortcut icon" href="/images/favicon.ico">
+  
+  <meta http-equiv="x-dns-prefetch-control" content="on">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+SerifMerriweather|Merriweather+Sans|Source+Code+Pro|Ubuntu:400,700|Noto+Serif+SC" media="all">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  <link rel="stylesheet" id="saukra_css-css" href="/css/style.css" type="text/css" media="all">
+  <link rel="stylesheet" href="/css/lib.min.css" media="all">
+  <link rel="stylesheet" href="/css/font.css" media="all">
+  <link rel="stylesheet" href="/css/insight.css" media="all">
+  <link rel="stylesheet" href="/css/jquery.fancybox.min.css" media="all">
+  <link rel="stylesheet" href="/css/zoom.css" media="all">
+  <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<!--   <link rel="stylesheet" id="saukra_css-css" href="https://2heng.xin/wp-content/cache/autoptimize/css/autoptimize_ad42a61f4c7d4bdd9f91afcff6b5dda5.css
+" type="text/css" media="all"> -->
+  <script>
+  /*Initial Variables*/
+  var mashiro_option = new Object();
+  var mashiro_global = new Object();
+  mashiro_option.NProgressON = true;
+  /* 
+   * 邮箱信息之类的东西可以填在这里，这些js变量基本都作用于sakura-app.js
+   * 这样的设置仅是为了方便在基于PHP开发的主题中设置js变量，既然移植到了Node上，我想或许可以精简这一逻辑吧
+   */
+  mashiro_option.email_domain = "";
+  mashiro_option.email_name = "";
+  mashiro_option.cookie_version_control = "";
+  mashiro_option.qzone_autocomplete = false;
+  mashiro_option.site_name = "Dynamic_Pigeon の秘密小屋";
+  mashiro_option.author_name = "秘密小屋";
+  mashiro_option.site_url = "https://chy669086.github.io";
+  mashiro_option.v_appId = "UBcI72jTU9rI7JRLoMf8dDYW-MdYXbMMI";
+  mashiro_option.v_appKey = "gTKs1SNQSmReQkqrp7NTzcTK";
+  mashiro_option.mathjax = "1";
+  mashiro_option.qq_api_url = "https://api.mashiro.top/qqinfo/"; 
+  mashiro_option.qq_avatar_api_url = "https://api.mashiro.top/qqinfo/";
+
+  // mashiro_option.jsdelivr_css_src = "https://cdn.jsdelivr.net/gh/moezx/cdn@3.4.5/css/lib.min.css";
+  // mashiro_option.float_player_on = true;
+
+  /*End of Initial Variables*/
+  </script>
+  <script type="text/javascript">
+  var bg = "https://s3.bmp.ovh/imgs/2024/10/01/7d1f2d8f10653936.png,https://s3.bmp.ovh/imgs/2024/10/01/d254935c80511b82.png,https://s3.bmp.ovh/imgs/2024/10/01/fff584855710b2ee.png,https://s3.bmp.ovh/imgs/2024/10/01/8e3255ed13b6619b.png,https://s3.bmp.ovh/imgs/2024/10/01/ed194d2571726fcb.png,https://s3.bmp.ovh/imgs/2024/10/01/89a65a3569f8a057.png,http://cdnjson.com/images/2024/10/01/81197b85969320adbdf325c260404543.png,http://cdnjson.com/images/2024/10/01/bb00ebdf0be26ef8765361f1184fa2a0.jpg".split(",");
+  var bgindex = Math.floor(Math.random()*bg.length);
+  if (!!window.ActiveXObject || "ActiveXObject" in window) { //is IE?
+    alert('朋友，IE浏览器未适配哦~');
+  }
+  </script>
+  <style type="text/css">
+  .hljs-ln{border-collapse:collapse}.hljs-ln td{padding:0}.hljs-ln-n:before{content:attr(data-line-number)}
+  </style>
+  <style type="text/css">.site-top .lower nav{display:block !important;}.author-profile i,.post-like a,.post-share .show-share,.sub-text,.we-info a,span.sitename,.post-more i:hover,#pagination a:hover,.post-content a:hover,.float-content i:hover{color:#FE9600}.feature i,.download,.navigator i:hover,.links ul li:before,.ar-time i,span.ar-circle,.object,.comment .comment-reply-link,.siren-checkbox-radio:checked + .siren-checkbox-radioInput:after{background:#FE9600}::-webkit-scrollbar-thumb{background:#FE9600}.download,.navigator i:hover,.link-title,.links ul li:hover,#pagination a:hover,.comment-respond input[type='submit']:hover{border-color:#FE9600}.entry-content a:hover,.site-info a:hover,.comment h4 a,#comments-navi a.prev,#comments-navi a.next,.comment h4 a:hover,.site-top ul li a:hover,.entry-title a:hover,#archives-temp h3,span.page-numbers.current,.sorry li a:hover,.site-title a:hover,i.iconfont.js-toggle-search.iconsearch:hover,.comment-respond input[type='submit']:hover{color:#FE9600}.comments .comments-main{display:block !important;}.comments .comments-hidden{display:none !important;}background-position:center center;background-attachment:inherit;}
+  </style>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="/css/collapse.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head>
+
+<body class="page-template page-template-user page-template-page-analytics page-template-userpage-analytics-php page page-id-1297 chinese-font serif isWebKit">
+  <div class="scrollbar" id="bar">
+  </div>
+  <a href="#" class="cd-top faa-float animated"></a>
+  <section id="main-container">
+    <div class="headertop filter-dot">
+  <div id="banner_wave_1"></div>
+  <div id="banner_wave_2"></div>
+  <figure id="centerbg" class="centerbg">
+    <div class="focusinfo no-select">
+      <div class="header-tou">
+        <a href="https://chy669086.github.io">
+          <img src="https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg">
+        </a>
+      </div>
+      <div class="header-info">
+        <p>Live your life with passion! With some drive!</p>
+        <div class="top-social_v2">
+          <li id="bg-pre">
+            <img class="flipx" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+          
+            
+              
+                <li>
+                  <a href="http://github.com/chy669086" target="_blank" class="social-github" title="github">
+                    <img src="https://s3.bmp.ovh/imgs/2024/10/01/57ace9502880e6f2.png">
+                  </a>
+                </li>
+              
+            
+          
+          <li id="bg-next">
+            <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/next-b.svg">
+          </li>
+        </div>
+      </div>
+    </div>
+  </figure>
+  <div id="video-container" style="">
+    <video style="object-fit: fill" id="bgvideo" class="video" video-name="" src="" width="auto" preload="auto">
+    </video>
+    <div id="video-btn" class="loadvideo videolive">
+    </div>
+    <div id="video-add">
+    </div>
+    <div class="video-stu">
+    </div>
+  </div>
+  <div class="headertop-down faa-float animated" onclick="headertop_down()">
+    <span>
+      <i class="fa fa-chevron-down" aria-hidden="true">
+      </i>
+    </span>
+  </div>
+</div>
+    <div id="page" class="site wrapper">
+      <header class="site-header no-select gizle sabit" role="banner">
+  <div class="site-top">
+    <div class="site-branding">
+      <span class="site-title">
+        <span class="logolink moe-mashiro">
+          <a href="/">
+            <span class="sakurasono">Dynamic_Pigeon の</span>
+            <span class="shironeko">秘密小屋</span>
+          </a>
+        </span>
+      </span>
+    </div>
+    <div class="searchbox search-form-submit">
+      <i class="iconfont js-toggle-search iconsearch icon-search">
+      </i>
+    </div>
+    <div id="show-nav" class="showNav mobile-fit">
+      <div class="line line1">
+      </div>
+      <div class="line line2">
+      </div>
+      <div class="line line3">
+      </div>
+    </div>
+    <div class="lower-cantiner">
+      <div class="lower">
+        <nav class="mobile-fit-control hide">
+          <ul id="menu-new" class="menu">
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+                    首页
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/archives">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+                    归档
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/categories/%E6%8A%80%E6%9C%AF/">
+                          <i class="fa fa-code" aria-hidden="true"></i>
+                          技术
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E6%96%87%E7%AB%A0/">
+                          <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                          文章
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E9%9A%8F%E6%83%B3/">
+                          <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                          随想
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/categories/%E7%AC%94%E8%AE%B0/">
+                          <i class="fa fa-book" aria-hidden="true"></i>
+                          笔记
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="javascript:;">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+                    清单
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/tags/%E6%82%A6%E8%AF%BB/">
+                          <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                          书单
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/bangumi/">
+                          <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                          番组
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/tags/%E5%9B%BE%E9%9B%86/">
+                          <i class="fa fa-photo" aria-hidden="true"></i>
+                          图集
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+              <li>
+                <a href="/comment/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+                    留言板
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/links/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+                    友人帐
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/donate/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+                    赞赏
+                  </span>
+                </a>
+                
+              </li>
+            
+              <li>
+                <a href="/">
+                  <span class="faa-parent animated-hover">
+                    <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+                    关于
+                  </span>
+                </a>
+                
+                  <ul class="sub-menu">
+                    
+                      <li>
+                        <a href="/about/">
+                          <i class="fa fa-meetup" aria-hidden="true"></i>
+                          我？
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/theme-sakura/">
+                          <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                          主题
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/lab/">
+                          <i class="fa fa-cogs" aria-hidden="true"></i>
+                          Lab
+                        </a>
+                      </li>
+                    
+                      <li>
+                        <a href="/rss2.xml">
+                          <i class="fa fa-rss faa-pulse" aria-hidden="true"></i>
+                          RSS
+                        </a>
+                      </li>
+                    
+                  </ul>
+                
+              </li>
+            
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+<div class="pattern-center-blank"></div>
+
+  <div class="pattern-center single-center">
+    <!-- 有配图默认渲染第一张 -->
+    <div class="pattern-attachment-img lazyload" style="background-image: url(https://s3.bmp.ovh/imgs/2024/10/08/14b0416bb5096fb3.jpeg);" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://s3.bmp.ovh/imgs/2024/10/08/14b0416bb5096fb3.jpeg">
+    </div>
+    <header class="pattern-header single-header">
+      <h1 class="entry-title">
+      2024 秋冬季开源操作系统训练营学习笔记</h1>
+      <p class="entry-census">
+        <span>
+          <a href="chy669086.github.io">
+            <img src="https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg">
+          </a>
+        </span>
+        <span>
+          <a href="chy669086.github.io">Dynamic_Pigeon</a>
+        </span>
+        <span class="bull">
+        ·</span>
+        发布时间
+        2024-10-8
+
+        <span class="bull">
+        ·</span>
+        更新时间
+        2024-12-22<span class="bull">
+        ·</span>
+      <span id="busuanzi_value_page_pv"></span>次阅读</p>
+    </header>
+  </div>
+
+<div id="content" class="site-content">
+  <div id="primary" class="content-area">
+    <main id="main" class="site-main" role="main">
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+        <div class="entry-content">
+          <p>个人 Rust 开源训练营学习笔记（感觉更像日记），大概会隔一段时间更新一次</p>
+<h2 id="2024-11-23"><a href="#2024-11-23" class="headerlink" title="2024-11-23"></a>2024-11-23</h2><div class='collapse'>
+      <div class='collapse-ctrl collapse-cardtitle' onclick='collapseToggle(this)'><div class='collapse-hint-ico'>&gt</div><span class='collapse-hint-show'>展开</span><span class='collapse-hint-hide'>隐藏</span></div>
+      <div class='collapse-content'><div class='content-flex collapse-cardborder'><div style='width:100%'>
+          <p><del>快一个月没有更新了</del></p>
+<p>今天又回去看了地址空间的知识。之前还是学的不扎实，昨天写阶段三的练习的时候又在想操作系统是怎么管理虚拟地址和物理地址的映射的。现在搞懂了，记录一下。</p>
+<p>risc-v 在开启 mmu 之后所有地址访问都是虚拟地址，操作系统为了管理所有的内存，在开启 mmu 之前，需要提前建立一个虚拟地址到物理地址的映射。在 arceos 中是建立了一个零偏移的的虚拟地址到物理地址的映射（才知道地址可以被重复映射），初始化映射表之后，就可以进入 mmu 模式，之后就可以启动应用程序进入用户态了。</p>
+<p>arceos 内核和应用用了两张页表，也就说每次 trap 的时候都需要刷一下 TLB 来保证地址访问正确。</p>
+<p>每个进程申请内存的时候，操作系统都会从剩余物理空间中找一些空间来映射，虚拟地址的连续不代表物理地址的连续，也就是跨页的数据在物理上不一定是连续的（感觉好色）。</p>
+<p>操作系统访问用户地址只需要找到用户的页表（前面整个内存都已经被操作系统映射了，所以操作系统可以访问所有的内存），并根据虚拟页表找到对应的物理页表，就可以直接访问（arceos 因为建立了零偏移的映射，所以不需要下一步转换，如果不是零偏移的转换需要再进行转换）。</p>
+</div></div>
+      </div>
+  </div>
+
+<h2 id="2024-10-27"><a href="#2024-10-27" class="headerlink" title="2024-10-27"></a>2024-10-27</h2><div class='collapse'>
+      <div class='collapse-ctrl collapse-cardtitle' onclick='collapseToggle(this)'><div class='collapse-hint-ico'>&gt</div><span class='collapse-hint-show'>展开</span><span class='collapse-hint-hide'>隐藏</span></div>
+      <div class='collapse-content'><div class='content-flex collapse-cardborder'><div style='width:100%'>
+          <p>ch8 在 10-21 已经写完了，昨天又花了一些时间重构了一下，这个训练营无疑大大提高了我的编码能力和阅读能力。</p>
+<p>在和群友的热烈讨论下，我也学习到了很多之前不怎么清楚的东西，但是还有很多不太懂的东西。</p>
+<p>很期待三阶段的学习！</p>
+</div></div>
+      </div>
+  </div>
+
+<h2 id="2024-10-18"><a href="#2024-10-18" class="headerlink" title="2024-10-18"></a>2024-10-18</h2><div class='collapse'>
+      <div class='collapse-ctrl collapse-cardtitle' onclick='collapseToggle(this)'><div class='collapse-hint-ico'>&gt</div><span class='collapse-hint-show'>展开</span><span class='collapse-hint-hide'>隐藏</span></div>
+      <div class='collapse-content'><div class='content-flex collapse-cardborder'><div style='width:100%'>
+          <p><em><strong>ch6 简直噩梦</strong></em></p>
+<p>感觉写的东西问题很大，也没有完全搞懂文件系统和内存系统，就是照葫芦画瓢，我的文件系统是有严重的泄露问题的，<del>但是不会改</del></p>
+<p>今天一口气写了很多垃圾代码，然后还包括一个死锁（同志们调函数的时候一定要注意这个函数要不要持有锁）。</p>
+<p>写好一个项目真是一门艺术。我 ch3 的代码在 ch4 ch5 ch6 分别重构了一遍，现在是我比较满意的一版。但是其他的我感觉写的就很怪，谁家结构体数据全部 pub 啊（）</p>
+<p>最近都没有去训练，都去写 os camp 了，现在只剩下最后一个要写代码的实验了，感觉晋级在望！感觉在这个训练营学到的真的很多，本来对操作系统只是一知半解，现在经过浅层的学习，了解到了很多以前只知道名词的概念，也对操作系统的数据组织形式有了更深的了解，同时也解开了以前对汇编的疑问。以前在想为什么汇编要有操作系统作为链接，一直以为汇编是和机器绑定的，是机器码。学习了之后才知道，原来系统中断是操作系统提供的，而且寻址也是被操作系统调整过的，操作系统调度了所有程序的运行，所有程序最终都是回归到操作系统中去的。</p>
+</div></div>
+      </div>
+  </div>
+
+<h2 id="2024-10-12"><a href="#2024-10-12" class="headerlink" title="2024-10-12"></a>2024-10-12</h2><div class='collapse'>
+      <div class='collapse-ctrl collapse-cardtitle' onclick='collapseToggle(this)'><div class='collapse-hint-ico'>&gt</div><span class='collapse-hint-show'>展开</span><span class='collapse-hint-hide'>隐藏</span></div>
+      <div class='collapse-content'><div class='content-flex collapse-cardborder'><div style='width:100%'>
+          <p>ch3 在昨天看了一天才看懂要干什么<del>我好菜啊</del></p>
+<p>ch3 写完后本地单独测试都能过，但是一起测试就会起飞，debug 后发现 <code>get_time()</code> 函数一直输出的是 0。群内老哥说应该是 sbi 的问题，我也不懂我也不知道啊（x</p>
+<p>然后我就重构了一下，我然后就写了一个很<del>弱智</del>的代码，重现一下大概是这个感觉：</p>
+<pre><code class="rust">use std::cell::RefCell;
+
+fn main() {
+    let task = Task::new(1);
+    println!(&quot;Task id: {}&quot;, task.get_id());
+}
+
+struct TaskInner {
+    arr: [u32; 10],
+    id: usize,
+}
+
+struct Task {
+    inner: RefCell&lt;TaskInner&gt;,
+}
+
+impl Task {
+    fn get_id(&amp;self) -&gt; u32 {
+        self.inner.borrow_mut().arr[self.inner.borrow_mut().id]
+    }
+
+    fn new(id: u32) -&gt; Task {
+        Task {
+            inner: RefCell::new(TaskInner {
+                arr: [id; 10],
+                id: 0,
+            }),
+        }
+    }
+}
+</code></pre>
+<p><code>self.inner.borrow_mut().arr[self.inner.borrow_mut().id]</code> 直接借用两次直接起飞（</p>
+<p><strong>警钟撅烂</strong></p>
+<p>ch3 我的实现十分的垃圾，感觉性能完全不行（</p>
+<p>ch4 直接告诉我要重写（</p>
+<p><del>杀了我算了</del></p>
+</div></div>
+      </div>
+  </div>
+
+<h2 id="2024-10-9"><a href="#2024-10-9" class="headerlink" title="2024-10-9"></a>2024-10-9</h2><div class='collapse'>
+      <div class='collapse-ctrl collapse-cardtitle' onclick='collapseToggle(this)'><div class='collapse-hint-ico'>&gt</div><span class='collapse-hint-show'>展开</span><span class='collapse-hint-hide'>隐藏</span></div>
+      <div class='collapse-content'><div class='content-flex collapse-cardborder'><div style='width:100%'>
+          <p>一上来第一件事就是抛开了 rust 标准库。我应该能想到的，毕竟标准库需要依赖系统，但是 OS Camp 要开发一个系统。这下轮子都要自己造了。</p>
+<p><del>我不会 RISV-V 汇编啊！</del></p>
+<p>训练营用的是 Qemu7.0 模拟器模拟环境。rust 编译使用 <code>riscv64gc-unknown-none-elf</code> 编译环境</p>
+<div class="admonition note"><p class="admonition-title">注解
+</p><p>riscv64gc-unknown-none-elf 的 CPU 架构是 riscv64gc，厂商是 unknown，操作系统是 none， elf 表示没有标准的运行时库。没有任何系统调用的封装支持，但可以生成 ELF 格式的执行程序。 我们不选择有 linux-gnu 支持的 riscv64gc-unknown-linux-gnu，是因为我们的目标是开发操作系统内核，而非在 linux 系统上运行的应用程序。</p>
+</div>
+
+<p>在加入编译命令 <code>riscv64gc-unknown-none-elf</code> 后再在 <code>main.rs</code> 加入 <code>#![no_std]</code> 后，如果在 vsc 使用 rust-analyzer 的时候会出现 <code>Can&#39;t find crete test</code>  的报错，但是程序又是没有问题的，这是一个 bug，官方 <a target="_blank" rel="noopener" href="https://github.com/rust-lang/vscode-rust/issues/729">issue</a>。</p>
+<p>只要在 vsc 的 settings.json 加入以下内容就行了</p>
+<pre><code class="json">{
+    &quot;rust-analyzer.checkOnSave.allTargets&quot;: false,
+    &quot;rust-analyzer.checkOnSave.extraArgs&quot;: [
+            &quot;--target&quot;,
+            &quot;riscv64gc-unknown-none-elf&quot;
+    ]
+}
+</code></pre>
+<p>以及训练营给出的解答：</p>
+<pre><code class="json">{
+    // Prevent &quot;can&#39;t find crate for `test`&quot; error on no_std
+    // Ref: https://github.com/rust-lang/vscode-rust/issues/729
+    // For vscode-rust plugin users:
+    &quot;rust.target&quot;: &quot;riscv64gc-unknown-none-elf&quot;,
+    &quot;rust.all_targets&quot;: false,
+    // For Rust Analyzer plugin users:
+    &quot;rust-analyzer.cargo.target&quot;: &quot;riscv64gc-unknown-none-elf&quot;,
+    &quot;rust-analyzer.checkOnSave.allTargets&quot;: false,
+    // &quot;rust-analyzer.cargo.features&quot;: [
+    //     &quot;board_qemu&quot;
+    // ]
+}
+</code></pre>
+<p>实验是在裸机平台上进行的（这不是放屁吗，os 还能在哪里跑）。</p>
+<p>看见那些中断和汇编调用，我已经要去世了</p>
+<p><strong>api 与 abi 的区别</strong></p>
+<p>说真的之前都不知道有 abi 这个东西。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>API</td>
+<td>Application Programming Interface</td>
+</tr>
+<tr>
+<td>ABI</td>
+<td>Application Binary Interface</td>
+</tr>
+</tbody></table>
+<p>简单来说，ABI 就是二进制接口，来自系统底层，所有程序都可以通过遵守 ABI 来调用；API 一般局限在一个编程语言，定义了源码级别的操作。</p>
+<div class="admonition info"><p class="admonition-title">训练营给的解释
+</p><p><strong>API 与 ABI 的区别</strong>
+应用程序二进制接口 ABI 是不同二进制代码片段的连接纽带。ABI 定义了二进制机器代码级别的规则，主要包括基本数据类型、通用寄存器的使用、参数的传递规则、以及堆栈的使用等等。ABI 与处理器和内存地址等硬件架构相关，是用来约束链接器 (Linker) 和汇编器 (Assembler) 的。在同一处理器下，基于不同高级语言编写的应用程序、库和操作系统，如果遵循同样的 ABI 定义，那么它们就能正确链接和执行。
+应用程序编程接口 API 是不同源代码片段的连接纽带。API 定义了一个源码级（如 C 语言）函数的参数，参数的类型，函数的返回值等。因此 API 是用来约束编译器 (Compiler) 的：一个 API 是给编译器的一些指令，它规定了源代码可以做以及不可以做哪些事。API 与编程语言相关，如 libc 是基于 C 语言编写的标准库，那么基于 C 的应用程序就可以通过编译器建立与 libc 的联系，并能在运行中正确访问 libc 中的函数。
+<a target="_blank" rel="noopener" href="https://rcore-os.cn/rCore-Tutorial-Book-v3/chapter0/2os-interface.html#apiabi">link</a></p>
+</div>
+</div></div>
+      </div>
+  </div>
+
+
+<h2 id="2024-10-8"><a href="#2024-10-8" class="headerlink" title="2024-10-8"></a>2024-10-8</h2><div class='collapse'>
+      <div class='collapse-ctrl collapse-cardtitle' onclick='collapseToggle(this)'><div class='collapse-hint-ico'>&gt</div><span class='collapse-hint-show'>展开</span><span class='collapse-hint-hide'>隐藏</span></div>
+      <div class='collapse-content'><div class='content-flex collapse-cardborder'><div style='width:100%'>
+          <p>上学期第一次了解到 rust 语言。第一次听到 rust 是来自他的外号“语言神”（原神启动！），以及了解到 rust 的最大特色：<strong>编译错误</strong>。</p>
+<p>学习了一段时间后，感觉 rust 是真**的优雅，所有权、生命周期、借用规则让我醍醐灌顶。也让我把这套规则移动到了其他语言使用，也是大大加速了我的编写速度。</p>
+<p>学习阶段去写了 <a target="_blank" rel="noopener" href="https://github.com/rust-lang/rustlings">rustling</a>、<a target="_blank" rel="noopener" href="https://github.com/skyzh/mini-lsm">mini-lsm</a> 开源学习项目（mini-lsm week3 开头给我干爆炸了就没有继续写下去）。</p>
+<p>感觉还是不是很深得 rust 开发的精髓。写起来 C 里 C 气。感觉取悦编译器也是一门技术活（最经典的 rust 序列访问会生成 assert，所以可以提前 assert 减少 assert 次数）。</p>
+<p><del>cargo 是世界上最好的包管理器！</del></p>
+<p>感谢 <a target="_blank" rel="noopener" href="https://course.rs/about-book.html">Rust语言圣经(Rust Course)</a>、<a target="_blank" rel="noopener" href="https://www.rustwiki.org.cn/zh-CN/book/">Rust 程序设计语言</a> 和其他网络上的作者贡献的大量的学习资源。</p>
+<p>现开源训练营一阶段晋级。（牛魔的 unsafe 链表真是依托）</p>
+<p><del>顺便吐槽一下 C++ 那依托的 tuple</del></p>
+</div></div>
+      </div>
+  </div>
+
+        </div>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="/images/donate/AliPayQR.png"></li>
+                <li class="wechat-code"><img src="/images/donate/WeChanQR.png"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+          
+            <div class="post-nepre half previous">
+          
+            <a href="/2024/10/11/bashrc-%E5%90%91-zshrc-%E8%BF%81%E7%A7%BB%E7%9A%84%E5%B0%8F%E5%A6%99%E6%8B%9B/" rel="prev">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://s3.bmp.ovh/imgs/2024/10/11/5610094626aebd1d.png" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://s3.bmp.ovh/imgs/2024/10/11/5610094626aebd1d.png">
+              </div>
+              <span class="label">
+              Previous Post</span>
+              <div class="info">
+                <h3>
+                .bashrc 向 .zshrc 迁移的小妙招</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+        
+          
+            <div class="post-nepre half next">
+          
+            <a href="/2024/10/05/C-CRTP-%E7%AE%80%E4%BB%8B/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="http://cdnjson.com/images/2024/10/05/image.png" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="http://cdnjson.com/images/2024/10/05/image.png">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                C++ CRTP 简介</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+  <div id="vcomments"></div>
+  <script>
+    window.onload = function(){
+        var valine = new Valine();
+        valine.init({
+          el: '#vcomments',
+          appId: "UBcI72jTU9rI7JRLoMf8dDYW-MdYXbMMI",
+          appKey: "gTKs1SNQSmReQkqrp7NTzcTK",
+          path: window.location.pathname,
+          placeholder: "你是我一生只会遇见一次的惊喜 ...",
+          serverURLs: "https://ubci72jt.api.lncldglobal.com"
+        })
+    }
+  </script>
+  
+  
+  
+  
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <a href="chy669086.github.io" class="profile gravatar"><img src="https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg" itemprop="image" alt="Dynamic_Pigeon" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="chy669086.github.io" itemprop="url" rel="author">Dynamic_Pigeon</a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i>一个好奇的人</p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
+</div>
+
+
+
+    </div>    
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="请输入关键词..."/>
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            // PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+    <!-- <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2025 Dynamic_Pigeon<br>
+      powered_by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer> -->
+<footer id="colophon" class="site-footer" role="contentinfo">
+  <div class="site-info">
+    <div class="footertext">
+      <div class="img-preload">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/wordpress-rotating-ball-o.svg">
+        <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/other/disqus-preloader.svg">
+      </div>
+      <p style="color: #666666;">&copy 2024</p>
+    </div>
+    <div class="footer-device">
+    <p style="font-family: 'Ubuntu', sans-serif;">
+        <span style="color: #b9b9b9;">Theme <a href="https://github.com/honjun/hexo-theme-sakura" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Sakura</a> <i class="iconfont icon-sakura rotating" style="color: #ffc0cb;display:inline-block"></i> by <a href="https://2heng.xin/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Mashiro</a>&<a href="https://www.hojun.cn/" target="_blank" style="color: #b9b9b9;;text-decoration: underline dotted rgba(0, 0, 0, .1);">Hojun</a>, Powered by Hexo, Hosted by Coding Pages</a>
+        </span>
+      </p>
+    </div>
+  </div><!-- .site-info -->
+</footer>
+
+
+
+<!-- <script src="/js/tocbot.js"></script> -->
+<script type="text/javascript" src="/js/lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script type="text/javascript" src="/js/InsightSearch.js"></script>
+<script type="text/javascript" src="/js/jquery.fancybox.min.js"></script>
+<script type="text/javascript" src="/js/zoom.min.js"></script>
+<script type="text/javascript" src="/js/sakura-app.js"></script>
+<!-- <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script> -->
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<!-- <script src='//unpkg.com/valine@1.3.4/dist/Valine.min.js'></script> -->
+<script src="/js/botui.js"></script>
+<!-- 不蒜子 网页计数器 -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<!-- <script async src="/js/busuanzi.pure.mini.js"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"close"},"windowheight":"fixed","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+} else {
+  var Poi = {"pjax":"1","movies":{"url": "https://cdn.jsdelivr.net/gh/honjun/hojun@1.2","name":"Unbroken.mp4","live":"open"},"windowheight":"auto","codelamp":"close","ajaxurl":"","order":"asc","formpostion":"bottom"};
+}
+/* ]]> */
+
+</script>
+<script>
+$(document).ready(function() {
+  if ($(".toc").length > 0 && document.body.clientWidth > 1200) {
+    if ($(".pattern-center").length > 0) { //有图的情况
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -400,
+          scrollSmoothOffset: -85
+      });
+    } else {
+      tocbot.init({
+          // Where to render the table of contents.
+          tocSelector: '.toc', // 放置目录的容器
+          // Where to grab the headings to build the table of contents.
+          contentSelector: '.entry-content', // 正文内容所在
+          // Which headings to grab inside of the contentSelector element.
+          scrollSmooth: true,
+          headingSelector: 'h1, h2, h3, h4, h5', // 需要索引的标题级别
+          headingsOffset: -85,
+          scrollSmoothOffset: -85
+      });
+    }
+    var offsetTop = $('.toc').offset().top - 95;
+    window.onscroll = function() {
+      var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+      if (scrollTop >= offsetTop) {
+        $('.toc').addClass('toc-fixed');
+      } else {
+        $('.toc').removeClass('toc-fixed');
+      }
+    }
+  }
+});
+</script>
+
+    <div class="openNav no-select" style="height: 50px;">
+      <div class="iconflat no-select" style="width: 50px; height: 50px;">
+        <div class="icon"></div>
+      </div>
+      <div class="site-branding search-form-submit">
+        <i class="iconfont js-toggle-search iconsearch icon-search"></i>
+      </div>
+    </div>
+  </section>
+  <div id="mo-nav" class="">
+  <div class="m-avatar">
+    <img src="https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg">
+  </div>
+  <p style="text-align: center; color: #333; font-weight: 900; font-family: 'Ubuntu', sans-serif; letter-spacing: 1.5px">Dynamic_Pigeon の秘密小屋</p>
+  <p style="text-align: center; word-spacing: 20px;">
+    
+      
+        <a href="http://github.com/chy669086" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+      
+    
+  </p>
+  <ul id="menu-new-1" class="menu">
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-fort-awesome faa-shake" aria-hidden="true"></i>
+            首页
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/archives">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-archive faa-shake" aria-hidden="true"></i>
+            归档
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/categories/%E6%8A%80%E6%9C%AF/">
+                  <i class="fa fa-code" aria-hidden="true"></i>
+                  技术
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E6%96%87%E7%AB%A0/">
+                  <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                  文章
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E9%9A%8F%E6%83%B3/">
+                  <i class="fa fa-commenting-o" aria-hidden="true"></i>
+                  随想
+                </a>
+              </li>
+            
+              <li>
+                <a href="/categories/%E7%AC%94%E8%AE%B0/">
+                  <i class="fa fa-book" aria-hidden="true"></i>
+                  笔记
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="javascript:;">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-list-ul faa-vertical" aria-hidden="true"></i>
+            清单
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/tags/%E6%82%A6%E8%AF%BB/">
+                  <i class="fa fa-th-list faa-bounce" aria-hidden="true"></i>
+                  书单
+                </a>
+              </li>
+            
+              <li>
+                <a href="/bangumi/">
+                  <i class="fa fa-film faa-vertical" aria-hidden="true"></i>
+                  番组
+                </a>
+              </li>
+            
+              <li>
+                <a href="/tags/%E5%9B%BE%E9%9B%86/">
+                  <i class="fa fa-photo" aria-hidden="true"></i>
+                  图集
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+      <li>
+        <a href="/comment/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-pencil-square-o faa-tada" aria-hidden="true"></i>
+            留言板
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/links/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-link faa-shake" aria-hidden="true"></i>
+            友人帐
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/donate/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-heart faa-pulse" aria-hidden="true"></i>
+            赞赏
+          </span>
+        </a>
+        
+      </li>
+    
+      <li>
+        <a href="/">
+          <span class="faa-parent animated-hover">
+            <i class="fa  fa-leaf faa-wrench" aria-hidden="true"></i>
+            关于
+          </span>
+        </a>
+        
+          <ul class="sub-menu">
+            
+              <li>
+                <a href="/about/">
+                  <i class="fa fa-meetup" aria-hidden="true"></i>
+                  我？
+                </a>
+              </li>
+            
+              <li>
+                <a href="/theme-sakura/">
+                  <i class="fa iconfont icon-sakura" aria-hidden="true"></i>
+                  主题
+                </a>
+              </li>
+            
+              <li>
+                <a href="/lab/">
+                  <i class="fa fa-cogs" aria-hidden="true"></i>
+                  Lab
+                </a>
+              </li>
+            
+              <li>
+                <a href="/rss2.xml">
+                  <i class="fa fa-rss faa-pulse" aria-hidden="true"></i>
+                  RSS
+                </a>
+              </li>
+            
+          </ul>
+        
+      </li>
+    
+  </ul>
+  <p style="text-align: center; font-size: 13px; color: #b9b9b9;">&copy 2019 hexo-sakura</p>
+</div>
+<button onclick="topFunction()" class="mobile-cd-top" id="moblieGoTop" title="Go to top" style="display: none;"><i class="fa fa-chevron-up" aria-hidden="true"></i></button>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css">
+<script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script>
+<!-- require MetingJS -->
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+<style>
+  .aplayer .aplayer-lrc {
+    height: 35px;
+  }
+  .aplayer .aplayer-lrc p{
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 18px !important;
+  }
+  .aplayer .aplayer-lrc p.aplayer-lrc-current{
+    color: #FF1493;
+  }
+  .aplayer.aplayer-narrow .aplayer-body{
+    left: -66px !important;
+  }
+  .aplayer.aplayer-fixed .aplayer-lrc {
+    display: none;
+  }
+  .aplayer .aplayer-lrc.aplayer-lrc-hide {
+      display:none !important;
+  }
+  .aplayer.aplayer-fixed .lrc-show {
+    display: block;
+    background: rgba(255, 255, 255, 0.8);
+  }
+</style>
+<meting-js
+
+    id="2660651585"
+
+    server="netease"
+
+    type="playlist"
+
+    fixed="true"
+
+    autoplay="false"
+
+    loop="all"
+
+    order="random"
+
+    preload="auto"
+
+    volume="0.7"
+
+    mutex="true"
+
+</meting-js>
+<script>
+  $(function(){
+    $('body').on('click', '.aplayer', function(){
+      if($('.aplayer-button').hasClass('aplayer-play')) {
+        $('.aplayer-lrc').removeClass('lrc-show');
+      } else {
+        $('.aplayer-lrc').addClass('lrc-show');
+      }
+    })
+  });
+</script>
+<!-- hexo injector body_end start -->
+<script src="/js/collapse.js"></script>
+<!-- hexo injector body_end end --></body>
+</html>
