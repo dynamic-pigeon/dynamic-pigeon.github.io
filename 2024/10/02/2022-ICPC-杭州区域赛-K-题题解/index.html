@@ -88,7 +88,7 @@
             
               
                 <li>
-                  <a href="http://github.com/chy669086" target="_blank" class="social-github" title="github">
+                  <a href="https://github.com/dynamic-pigeon" target="_blank" class="social-github" title="github">
                     <img src="https://s3.bmp.ovh/imgs/2024/10/01/57ace9502880e6f2.png">
                   </a>
                 </li>
@@ -359,7 +359,7 @@
         <div class="entry-content">
           <h2 id="题目大意"><a href="#题目大意" class="headerlink" title="题目大意"></a>题目大意</h2><p>给你 $n$ 个字符串，然后有 $q$ 次询问，每次询问给出一个字典序，请你输出在这个字典序下的逆序对个数。</p>
 <h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><p>首先考虑暴力，每次询问可以 $O(|S|\log(n))$ 处理，显然会超时。</p>
-<p>考虑优化，注意到两个字符串比较出结果一定是在某个位置发生的（称这个比出大小的比较为<strong>决定性比较</strong>），这两个字符串一定有一个相同的前缀（长度可能是 0）。那么可以把问题转换成判断某个字符和其他字符发生了几次<strong>决定性</strong>的的比较，那么对于每次询问我们和 $O(26 \times 26)$ 处理。</p>
+<p>考虑优化，注意到两个字符串比较出结果一定是在某个位置发生的（称这个比出大小的比较为<strong>决定性比较</strong>），这两个字符串一定有一个相同的前缀（长度可能是 0）。那么可以把问题转换成判断某个字符和其他字符发生了几次<strong>决定性</strong>的的比较，那么对于每次询问我们 $O(26 \times 26)$ 处理。</p>
 <p>如何找到发生了几次决定性的比较呢，注意前面的一个性质，决定性比较之前的两个字符串一定是同前缀，这正好撞上了字典树的性质：相同前缀共用一条链。</p>
 <p>我们只要统计每个节点的后继节点字符总数，就可以对每一个新插入的字符串进行决定性比较的统计。对于 <code>a</code> 和 <code>aa</code> 这种串，我们可以简单在每个串后面加一个字符，并人为将这个字符的字典序设置为最小</p>
 <pre><code class="c++">// 字段树节点
@@ -492,7 +492,7 @@ void tizzytyt_SuKi() &#123;
 
     i64 ans = 0;
 
-    for (int i = 0; i &lt; 27 - 1; i++) &#123;
+    for (int i = 0; i &lt; 26; i++) &#123;
       for (int j =  i + 1; j &lt; 27; j++) &#123;
         ans += cnt[s[i] - &#39;a&#39;][s[j] - &#39;a&#39;];
       &#125;
@@ -756,7 +756,7 @@ $(document).ready(function() {
   <p style="text-align: center; word-spacing: 20px;">
     
       
-        <a href="http://github.com/chy669086" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
+        <a href="https://github.com/dynamic-pigeon" class="fa fa-github" target="_blank" style="color: #333; margin-left:20px"></a>
       
     
   </p>

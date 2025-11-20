@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   
-  <title itemprop="name">Tag: linux | Dynamic_Pigeon</title>
+  <title itemprop="name">偶然发现的 rust stdout 的一些东西 | Dynamic_Pigeon</title>
   
     <link rel="shortcut icon" href="/images/favicon.ico">
   
@@ -315,66 +315,145 @@
   </div>
 </header>
 
-      
+      <link rel="stylesheet" type="text/css" href="/css/sharejs.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
 <div class="pattern-center-blank"></div>
-<div class="pattern-center ">
-  <div class="pattern-attachment-img">
-    <img src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="linux.img" class="lazyload" onerror="imgError(this,3)" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;">
-  </div>
-  <header class="pattern-header ">
-    <h1 class="cat-title">linux</h1>
-  </header>
-</div>
+
 <div id="content" class="site-content">
   <div id="primary" class="content-area">
     <main id="main" class="site-main" role="main">
-      
-  <!-- 首页默认取最最新文章集 -->
-  
-    <article class="post post-list" itemscope="" itemtype="https://schema.org/BlogPosting">
-  <div class="post-entry">
-    <div class="feature">
-      <a href="/2024/10/11/bashrc-%E5%90%91-zshrc-%E8%BF%81%E7%A7%BB%E7%9A%84%E5%B0%8F%E5%A6%99%E6%8B%9B/">
-        <div class="overlay">
-          <i class="iconfont icon-text">
-          </i>
+      <article id="post-1" class="post-1 post type-post status-publish format-standard has-post-thumbnail hentry category-uncategorized">
+        <div class="toc"></div>
+        <!--<div class="toc-entry-content"><!-- 套嵌目录使用（主要为了支援评论）-->
+        
+          <header class="entry-header">
+            <h1 class="entry-title">偶然发现的 rust stdout 的一些东西</h1>
+            <p class="entry-census">Dynamic_Pigeon&nbsp;·&nbsp;2025-11-20&nbsp;·&nbsp;
+              
+              <span id="busuanzi_value_page_pv"></span>次阅读</p></p>
+
+            <hr>
+          </header>
+        
+        <div class="entry-content">
+          <h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>我今天在牛客用 rust 写每日一题，按理来说 rust 是和 c 一个速度的，所以应该跑的很快，但是我却超时了，这让我不是很能理解。我想过是因为 <code>println</code> 每次调用都会去获取 stdout 的锁导致的超时，但是就算我提前锁上了，我依然超时了，最后我用 <code>BufWriter</code> 包了一层才通过，而且速度极大的提高了。</p>
+<h2 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h2><p>然后我就去查看了 stdout 的 <code>write_all</code> 函数，在层层包裹下，我看见了下面的代码</p>
+<pre><code class="rust">fn write_all(&amp;mut self, buf: &amp;[u8]) -&gt; io::Result&lt;()&gt; &#123;
+    match memchr::memrchr(b&#39;\n&#39;, buf) &#123;
+        // If there are no new newlines (that is, if this write is less than
+        // one line), just do a regular buffered write (which may flush if
+        // we exceed the inner buffer&#39;s size)
+        None =&gt; &#123;
+            self.flush_if_completed_line()?;
+            self.buffer.write_all(buf)
+        &#125;
+        Some(newline_idx) =&gt; &#123;
+            let (lines, tail) = buf.split_at(newline_idx + 1);
+
+            if self.buffered().is_empty() &#123;
+                self.inner_mut().write_all(lines)?;
+            &#125; else &#123;
+                // If there is any buffered data, we add the incoming lines
+                // to that buffer before flushing, which saves us at least
+                // one write call. We can&#39;t really do this with `write`,
+                // since we can&#39;t do this *and* not suppress errors *and*
+                // report a consistent state to the caller in a return
+                // value, but here in write_all it&#39;s fine.
+                self.buffer.write_all(lines)?;
+                self.buffer.flush_buf()?;
+            &#125;
+
+            self.buffer.write_all(tail)
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<p>对于有换行的输出，stdout 会把最后一个换行前的全部 flush，而我写的这题有 1e6 次输出而且每次都换行，频繁的 flush 导致了超时。</p>
+
         </div>
-        <img width="150" height="150" src="https://s3.bmp.ovh/imgs/2024/10/11/5610094626aebd1d.png" class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" >
-      </a>
-    </div>
-    <h1 class="entry-title">
-    <a href="/2024/10/11/bashrc-%E5%90%91-zshrc-%E8%BF%81%E7%A7%BB%E7%9A%84%E5%B0%8F%E5%A6%99%E6%8B%9B/">
-    .bashrc 向 .zshrc 迁移的小妙招</a>
-    </h1>
-    <div class="p-time">
-      <i class="iconfont icon-calendar">
-      </i>发表于2024-10-11 17:10
-      <br>
-      <i class="iconfont icon-time">
-      </i>更新于2024-10-11 17:10</div>
-    <p>
-    </p>
-    <footer class="entry-footer">
-      <div class="post-more">
-        <a href="/2024/10/11/bashrc-%E5%90%91-zshrc-%E8%BF%81%E7%A7%BB%E7%9A%84%E5%B0%8F%E5%A6%99%E6%8B%9B/">
-          <i class="iconfont icon-caidan">
-          </i>
-        </a>
-      </div>
-    </footer>
-  </div>
-  <hr>
-</article>
+        <!-- .entry-content -->
+        <div class="single-reward">
+          <div class="reward-open">赏
+            <div class="reward-main">
+              <ul class="reward-row">
+                <li class="alipay-code"><img src="/images/donate/AliPayQR.png"></li>
+                <li class="wechat-code"><img src="/images/donate/WeChanQR.png"></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div style="text-align:center; width: 100%" class="social-share share-mobile" data-disabled="diandian, tencent"></div>
+        <footer class="post-footer">
+          <div class="post-lincenses"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="nofollow"><i class="fa fa-creative-commons" aria-hidden="true"></i> 知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a></div>
+          <div class="post-tags">
+          </div>
+          <div class="post-share">
+            <div class="social-share sharehidden share-component"></div>
+            <i class="iconfont show-share icon-forward"></i>
+          </div>
+        </footer><!-- .entry-footer -->
+      </article>
+      <!-- #post-## -->
+      <div class="toc" style="background: none;"></div>
+      <section class="post-squares nextprev">
+        
+        
+          
+            <div class="post-nepre full next">
+          
+            <a href="/2025/05/21/%E8%AE%B0%E4%B8%80%E4%B8%AA%E5%9C%A8%E7%BE%A4%E5%86%85%E7%9C%8B%E8%A7%81%E7%9A%84%E5%B0%8F%E4%B8%9C%E8%A5%BF/" rel="next">
+              <div class="background">
+                <img class="lazyload" src="https://cdn.jsdelivr.net/gh/honjun/cdn@1.6/img/loader/orange.progress-bar-stripe-loader.svg" data-src="https://s3.bmp.ovh/imgs/2025/05/21/fde69d64df05b95c.png" style="width: 100%; height: 100%; object-fit: cover; pointer-events: none;" onerror="imgError(this,3)" src="https://s3.bmp.ovh/imgs/2025/05/21/fde69d64df05b95c.png">
+              </div>
+              <span class="label">
+              Next Post</span>
+              <div class="info">
+                <h3>
+                记一个在群内看见的小东西</h3>
+                <hr>
+              </div>
+            </a>
+          </div>
+        
+      </section>
+      
+  <div id="vcomments"></div>
+  <script>
+    window.onload = function(){
+        var valine = new Valine();
+        valine.init({
+          el: '#vcomments',
+          appId: "UBcI72jTU9rI7JRLoMf8dDYW-MdYXbMMI",
+          appKey: "gTKs1SNQSmReQkqrp7NTzcTK",
+          path: window.location.pathname,
+          placeholder: "你是我一生只会遇见一次的惊喜 ...",
+          serverURLs: "https://ubci72jt.api.lncldglobal.com"
+        })
+    }
+  </script>
   
-
-
-      <div class="clearer">
-      </div>
-    </main>
-    <!--  -->
-    
-  </div>
+  
+  
+  
+      <section class="author-profile">
+        <div class="info" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <a href="dynamic-pigeon.github.io" class="profile gravatar"><img src="https://s3.bmp.ovh/imgs/2024/10/08/ca40e9bf152dbbf0.jpg" itemprop="image" alt="Dynamic_Pigeon" height="70" width="70"></a>
+          <div class="meta">
+            <span class="title">Author</span>
+            <h3 itemprop="name">
+            <a href="dynamic-pigeon.github.io" itemprop="url" rel="author">Dynamic_Pigeon</a>
+            </h3>
+          </div>
+        </div>
+        <hr>
+        <p><i class="iconfont icon-write"></i>一个好奇的人</p>
+      </section>
+    </main><!-- #main -->
+  </div><!-- #primary -->
 </div>
+
+
+
     </div>    
     <div class="ins-search">
     <div class="ins-search-mask"></div>
